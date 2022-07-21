@@ -1,8 +1,18 @@
+@keyframes goBottom {
+  0% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .task {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.5rem;
 
   padding: 1rem;
 
@@ -11,15 +21,18 @@
 
   background-color: var(--gray-500);
 
-  &:first-child {
-    margin-top: 1.5rem;
-  }
+  animation: goBottom 0.2s;
 
   p {
     font-size: 0.875rem;
     line-height: 1.225rem;
 
     color: var(--gray-100);
+  }
+
+  .isChecked {
+    color: var(--gray-300);
+    text-decoration-line: line-through;
   }
 
   button {
@@ -46,11 +59,5 @@
         color: var(--danger);
       }
     }
-  }
-}
-
-@media(max-width: 768px) {
-  .task {
-    gap: 1.5rem;
   }
 }

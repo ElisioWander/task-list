@@ -17,6 +17,10 @@
     &::placeholder {
       color: var(--gray-300);
     }
+
+    &:focus {
+      border: solid 1px var(--gray-700);
+    }
   }
 
   > button {
@@ -47,6 +51,10 @@
       cursor: not-allowed;
       background-color: var(--blue-dark);
       opacity: 0.8;
+    }
+
+    &:focus {
+      border: solid 1px var(--gray-700);
     }
   }
 }

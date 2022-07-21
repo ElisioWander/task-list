@@ -1,18 +1,19 @@
 import { FormEvent, useState, ChangeEvent } from "react";
 import { Form } from "./Form";
 import { Task } from "./Task";
+import { EmptyTasks } from "./EmptyTasks";
 
-import clipBoard from "../assets/Clipboard.svg";
 import styles from "./Dashboard.module.scss";
 
-type Tasks = {
+type Task = {
   id: number;
   name: string;
+  isChecked: boolean;
 };
 
 export function Dashboard() {
-  const [tasks, setTasks] = useState<Tasks[]>([]);
-  const [newTaks, setNewTask] = useState('');
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTaks, setNewTask] = useState("");
 
   function handleGetInputText(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value;
@@ -29,16 +30,41 @@ export function Dashboard() {
     const createdTask = {
       id: taskId,
       name: newTaks,
+      isChecked: false,
     };
 
     setTasks((state) => [...state, createdTask]);
-
     setNewTask("");
   }
 
   function handleDeleteTask(taskId: number) {
     setTasks(tasks.filter((allTasks) => allTasks.id !== taskId));
   }
+
+  function handleGetCompletedTasks(checkedTaskId: number) {
+    const arrayTasks = [...tasks];
+
+    for (let i in arrayTasks) {
+      if (arrayTasks[i].id === checkedTaskId) {
+        arrayTasks[i].isChecked = true;
+      }
+    }
+
+    setTasks([...arrayTasks]);
+  }
+
+  const completedTasks = tasks?.filter((task) => task.isChecked === true);
+
+  const parsedTasks = tasks.map(task => {
+    return (
+      <Task
+        key={task.id}
+        task={task}
+        onDeleteTask={handleDeleteTask}
+        onGetCompletedTasks={handleGetCompletedTasks}
+      />
+    )
+  })
 
   return (
     <div className={styles.container}>
@@ -56,18 +82,16 @@ export function Dashboard() {
           </div>
           <div>
             <p>Concluidas</p>
-            <span>0</span>
+            <span>{completedTasks.length} de {tasks.length}</span>
           </div>
         </div>
 
         <section className={styles.tasks}>
-          {tasks?.map((task) => (
-            <Task
-              key={task.id}
-              task={task}
-              onDeleteTask={handleDeleteTask}
-            />
-          ))}
+          {tasks.length === 0 ? (
+            <EmptyTasks />
+          ) : (
+            parsedTasks
+          )}
         </section>
       </main>
     </div>
