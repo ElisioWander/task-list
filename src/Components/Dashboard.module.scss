@@ -1,0 +1,63 @@
+.container {
+  width: 90%;
+  max-width: 46rem;
+  margin-top: -1.71875rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.tasksContainer {
+  width: 100%;
+  margin-top: 4rem;
+}
+
+.headerTasks {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      font-size: 0.875rem;
+      font-weight: bold;
+      line-height: 1.05875rem;
+    }
+
+    span {
+      padding: 2px 8px;
+      border-radius: 999px;
+
+      font-size: 0.75rem;
+      font-weight: bold;
+      line-height: 0.9375rem;
+
+      color: var(--gray-200);
+      background-color: var(--gray-400);
+    }
+  }
+
+  & div:first-child {
+    p {
+      color: var(--blue);
+    }
+  }
+
+  & div:last-child {
+    p {
+      color: var(--purple);
+    }
+  }
+}
+
+.tasks {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

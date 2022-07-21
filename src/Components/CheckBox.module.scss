@@ -1,0 +1,49 @@
+.checkBox {
+  display: block;
+  position: relative;
+
+  cursor: pointer;
+
+  input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    transition: all 0.2s;
+
+    &:checked ~ .checkMark {
+      border: none;
+      background-color: var(--purple-dark);
+
+      &:hover {
+        background-color: var(--purple);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.checkMark {
+  width: 1.0625rem;
+  height: 1.0625rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 1.5px;
+  left: 0;
+
+  border: solid 1px var(--blue);
+  border-radius: 999px;
+
+  background-color: transparent;
+
+  transition: all 0.1s;
+
+  &:hover {
+    background-color: var(--blue-dark);
+    opacity: 0.2;
+  }
+}

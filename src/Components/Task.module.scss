@@ -1,0 +1,56 @@
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1rem;
+
+  border: solid 1px var(--gray-400);
+  border-radius: 8px;
+
+  background-color: var(--gray-500);
+
+  &:first-child {
+    margin-top: 1.5rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.225rem;
+
+    color: var(--gray-100);
+  }
+
+  button {
+    line-height: 0;
+    padding: 0.125rem;
+    cursor: pointer;
+
+    border: none;
+    border-radius: 4px;
+
+    background-color: transparent;
+
+    transition: all 0.1s;
+
+    svg {
+      color: var(--gray-300);
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: var(--gray-400);
+
+      svg {
+        color: var(--danger);
+      }
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .task {
+    gap: 1.5rem;
+  }
+}
