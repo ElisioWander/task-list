@@ -10,7 +10,7 @@
 **Todo**: Desafio proposto no primeiro modulo da trilha de React.js do Ignite. Se trata de uma lista de tarefas onde você pode criar uma tarefa e deleta-la.
 
 ## ⚠️OBS
-# Adições além do desafio:
+### Adições além do desafio:
 - Salvar os dados no localStorage
 - Atualizar task (em desenvolvimento neste instante)
 ---
