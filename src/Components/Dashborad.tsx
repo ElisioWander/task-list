@@ -1,4 +1,4 @@
-import { FormEvent, useState, ChangeEvent, useEffect } from "react";
+import { FormEvent, useState, ChangeEvent } from "react";
 import { Form } from "./Form";
 import { Task } from "./Task";
 import { EmptyTasks } from "./EmptyTasks";
@@ -38,24 +38,29 @@ export function Dashboard() {
     setTasks((state) => [...state, createdTask]);
     setNewTask("");
 
-    const sendTasksToLocalstorage = [...tasks, createdTask]
-    localStorage.setItem('tasks', JSON.stringify(sendTasksToLocalstorage))
+    const tasksPlusCreatedTask = [...tasks, createdTask]
+    localStorage.setItem('tasks', JSON.stringify(tasksPlusCreatedTask))
   }
 
   function handleDeleteTask(taskId: number) {
-    setTasks(tasks.filter((allTasks) => allTasks.id !== taskId));
+    const tasksWithoutDeletedTask = tasks.filter((allTasks) => allTasks.id !== taskId)
+    setTasks(tasksWithoutDeletedTask);
+
+    localStorage.setItem('tasks', JSON.stringify(tasksWithoutDeletedTask))
   }
 
-  function handleGetCompletedTasks(checkedTaskId: number) {
-    const arrayTasks = [...tasks];
+  function handleGetCompletedTasks(completedTaskId: number) {
+    const currentTasks = [...tasks];
 
-    for (let i in arrayTasks) {
-      if (arrayTasks[i].id === checkedTaskId) {
-        arrayTasks[i].isChecked = true;
+    for (let i in currentTasks) {
+      if (currentTasks[i].id === completedTaskId) {
+        currentTasks[i].isChecked = true;
       }
     }
 
-    setTasks([...arrayTasks]);
+    setTasks([...currentTasks]);
+
+    localStorage.setItem('tasks', JSON.stringify([...currentTasks]))
   }
 
   const completedTasks = tasks?.filter((task) => task.isChecked === true);
