@@ -1,4 +1,4 @@
-import { FormEvent, useState, ChangeEvent } from "react";
+import { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Form } from "./Form";
 import { Task } from "./Task";
 import { EmptyTasks } from "./EmptyTasks";
@@ -11,8 +11,10 @@ type Task = {
   isChecked: boolean;
 };
 
+const tasksInLocalstorage = JSON.parse(localStorage.getItem('tasks') as any)
+
 export function Dashboard() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(tasksInLocalstorage || []);
   const [newTaks, setNewTask] = useState("");
 
   function handleGetInputText(event: ChangeEvent<HTMLInputElement>) {
@@ -35,6 +37,9 @@ export function Dashboard() {
 
     setTasks((state) => [...state, createdTask]);
     setNewTask("");
+
+    const sendTasksToLocalstorage = [...tasks, createdTask]
+    localStorage.setItem('tasks', JSON.stringify(sendTasksToLocalstorage))
   }
 
   function handleDeleteTask(taskId: number) {
