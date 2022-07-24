@@ -1,5 +1,5 @@
 import { Header } from "./Components/Header";
-import { Dashboard } from "./Components/Dashborad";
+import { Dashboard } from "./Components/Dashboard";
 
 import styles from "./App.module.scss"
 

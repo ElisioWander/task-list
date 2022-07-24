@@ -1,4 +1,4 @@
-import clipBoard from "../assets/Clipboard.svg";
+import clipBoard from "../../assets/Clipboard.svg";
 import styles from "./EmptyTasks.module.scss"
 
 export function EmptyTasks() {
