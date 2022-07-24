@@ -7,12 +7,17 @@
 </h1>
 
 ## 🏷️ Sobre 
-**Todo**: Desafio proposto no primeiro modulo da trilha de React.js do Ignite. Se trata de uma lista de tarefas onde você pode criar uma tarefa e deleta-la.
-
+**Todo**: Desafio proposto no primeiro modulo da trilha de React.js do Ignite.
+O desafio proposto era:
+- [x] Desenvolver a aplicação a partir do layout no Figma
+- [x] Adicionar uma nova tarefa
+- [x] Marcar e desmarcar uma tarefa como concluída
+- [x] Remover uma tarefa da listagem
+- [x] Mostrar o progresso de conclusão das tarefas
 ## ⚠️OBS
 ### Adições além do desafio:
-- Salvar os dados no localStorage
-- Atualizar task (em desenvolvimento neste instante)
+- [x] Salvar os dados no localStorage
+- [x] Atualizar tarefa
 ---
 
 ## 🛠️ Tecnologias e serviços utilizados
@@ -30,7 +35,7 @@ Foram utilizadas as seguintes tecnologias para desenvolver a aplicação **Todo*
 ```bash
 
     #clonar o projeto
-    $ git clone https://github.com/ElisioWander/task-list-challenge-ignite.git
+    $ git clone https://github.com/ElisioWander/task-list.git
 
     #entrar no diretório
     $ cd todo
