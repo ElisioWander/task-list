@@ -40,6 +40,10 @@
   .isChecked {
     color: var(--gray-300);
     text-decoration-line: line-through;
+    
+    &:hover {
+      cursor: default;
+    }
   }
 
   button {

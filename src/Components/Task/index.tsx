@@ -31,6 +31,14 @@ export function Task({
     onGetCompletedTasks(task.id);
   }
 
+  const taskIncompleted = (
+    <p onClick={handleOpenModal} >{task.name}</p>
+  )
+
+  const taskWasCompleted = (
+    <p className={styles.isChecked}>{task.name}</p>
+  )
+
   return (
     <div
       className={styles.task}
@@ -40,12 +48,8 @@ export function Task({
         onActiveCheckbox={handleActiveCheckbox}
         isTaskCompleted={isTaskCompleted}
       />
-      <p
-        className={`${isTaskCompleted && styles.isChecked}`}
-        onClick={handleOpenModal}
-      >
-        {task.name}
-      </p>
+      
+      { isTaskCompleted ? taskWasCompleted : taskIncompleted }
 
       <button onClick={() => onDeleteTask(task.id)}>
         <Trash size={14} />
