@@ -28,6 +28,13 @@
     line-height: 1.225rem;
 
     color: var(--gray-100);
+
+    transition: all 0.1s;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--gray-300);
+    }
   }
 
   .isChecked {

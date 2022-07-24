@@ -5,40 +5,46 @@ type ModalContextData = {
   taskId: number;
   handleOpenModal: () => void;
   handleCloseModal: () => void;
-  handleGetTaskId: (taskId: number) => void ;
-}
+  handleGetTaskId: (taskId: number) => void;
+};
 
 interface ModalContextPrviderProps {
   children: ReactNode;
 }
 
-const ModalContext = createContext({} as ModalContextData)
+const ModalContext = createContext({} as ModalContextData);
 
 export function ModalContextPrvider({ children }: ModalContextPrviderProps) {
-  const [isOpenMdal, setIsOpenModal] = useState(false)
-  const [taskId, setTaskId] = useState(0)
+  const [isOpenMdal, setIsOpenModal] = useState(false);
+  const [taskId, setTaskId] = useState(0);
 
   function handleOpenModal() {
-    const toggleModal = !isOpenMdal
-    const hiddenOverflow = toggleModal ? 'hidden' : 'initial'
+    const toggleModal = !isOpenMdal;
 
-    document.body.style.overflow = hiddenOverflow
-    setIsOpenModal(toggleModal)
+    setIsOpenModal(toggleModal);
   }
 
   function handleCloseModal() {
-    setIsOpenModal(false)
+    setIsOpenModal(false);
   }
 
   function handleGetTaskId(taskId: number) {
-    setTaskId(taskId)
+    setTaskId(taskId);
   }
 
   return (
-    <ModalContext.Provider value={{isOpenMdal, taskId, handleOpenModal, handleCloseModal, handleGetTaskId}}>
+    <ModalContext.Provider
+      value={{
+        isOpenMdal,
+        taskId,
+        handleOpenModal,
+        handleCloseModal,
+        handleGetTaskId,
+      }}
+    >
       {children}
     </ModalContext.Provider>
-  )
+  );
 }
 
-export const useModal = () => useContext(ModalContext)
+export const useModal = () => useContext(ModalContext);
