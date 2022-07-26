@@ -71,13 +71,13 @@
     button {
       width: 100%;
 
-      padding: 1rem;
+      padding: calc(1rem - 1px);
   
       font-weight: bold;
       font-size: 0.875rem;
       cursor: pointer;
   
-      border: none;
+      border: solid 1px transparent;
       border-radius: 8px;
   
       color: var(--gray-100);

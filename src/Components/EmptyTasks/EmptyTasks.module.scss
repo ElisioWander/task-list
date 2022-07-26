@@ -14,3 +14,11 @@
     line-height: 1.4rem;
   }
 }
+
+@media(max-width: 349px) {
+  .container {
+    p {
+      font-size: 80%;
+    }
+  }
+}

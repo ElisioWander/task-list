@@ -35,7 +35,7 @@
     font-size: 0.875rem;
     cursor: pointer;
 
-    border: none;
+    border: solid 1px transparent;
     border-radius: 8px;
 
     color: var(--gray-100);
@@ -56,5 +56,12 @@
     &:focus {
       border: solid 1px var(--gray-700);
     }
+  }
+}
+
+@media(max-width: 371px) {
+  .form {
+    display: flex;
+    flex-direction: column;
   }
 }

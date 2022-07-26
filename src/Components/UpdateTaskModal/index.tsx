@@ -20,9 +20,10 @@ export function UpdateTaskModal({ onUpdateTask }: UpdateTaskModalProps) {
     event.preventDefault()
 
     onUpdateTask(taskId, editTaskValue)
+    setEditTaskValue('')
   }
 
-  const editTaskValueIsEmpty = editTaskValue.length === 0
+  const editTaskValueIsEmpty = !editTaskValue
 
   if (isOpenMdal) {
     return (

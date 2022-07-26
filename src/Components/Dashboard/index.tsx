@@ -1,11 +1,11 @@
-import { FormEvent, useState, ChangeEvent } from "react";
+import { FormEvent, useState, ChangeEvent, useCallback } from "react";
 import { Form } from "../Form";
 import { Task } from "../Task";
 import { EmptyTasks } from "../EmptyTasks";
 import { UpdateTaskModal } from "../UpdateTaskModal";
+import { useModal } from "../../Context/ModalContext";
 
 import styles from "./Dashboard.module.scss";
-import { useModal } from "../../Context/ModalContext";
 
 type Task = {
   id: number;
@@ -63,41 +63,31 @@ export function Dashboard() {
     localStorage.setItem('tasks', JSON.stringify([...updatedTasks]))
   }
 
-  function handleDeleteTask(taskId: number) {
+  const handleDeleteTask = useCallback((taskId: number) => {
     const tasksWithoutDeletedTask = tasks.filter(
-      (allTasks) => allTasks.id !== taskId
-    );
-    setTasks(tasksWithoutDeletedTask);
+          (allTasks) => allTasks.id !== taskId
+        );
+        setTasks(tasksWithoutDeletedTask);
+    
+        localStorage.setItem("tasks", JSON.stringify(tasksWithoutDeletedTask));
+  }, [tasks])
 
-    localStorage.setItem("tasks", JSON.stringify(tasksWithoutDeletedTask));
-  }
-
-  function handleGetCompletedTasks(completedTaskId: number) {
+  const handleGetCompletedTasks = useCallback((completedTaskId: number) => {
     const currentTasks = [...tasks];
 
-    for (let i in currentTasks) {
-      if (currentTasks[i].id === completedTaskId) {
-        currentTasks[i].isChecked = true;
+      for (let i in currentTasks) {
+        if (currentTasks[i].id === completedTaskId) {
+          currentTasks[i].isChecked = true;
+        }
       }
-    }
-
-    setTasks([...currentTasks]);
-
-    localStorage.setItem("tasks", JSON.stringify([...currentTasks]));
-  }
+  
+      setTasks([...currentTasks]);
+  
+      localStorage.setItem("tasks", JSON.stringify([...currentTasks]));
+  }, [tasks])
 
   const completedTasks = tasks?.filter((task) => task.isChecked === true);
-
-  const parsedTasks = tasks.map((task) => {
-    return (
-      <Task
-        key={task.id}
-        task={task}
-        onGetCompletedTasks={handleGetCompletedTasks}
-        onDeleteTask={handleDeleteTask}
-      />
-    );
-  });
+  const isTasksEmpty = tasks.length === 0
 
   return (
     <>
@@ -122,9 +112,18 @@ export function Dashboard() {
             </div>
           </div>
 
-          <section className={styles.tasks}>
-            {tasks.length === 0 ? <EmptyTasks /> : parsedTasks}
-          </section>
+          <div className={styles.tasks}>
+            {isTasksEmpty 
+              ? <EmptyTasks /> 
+              : tasks.map(task => (
+                <Task
+                  key={task.id}
+                  task={task}
+                  onGetCompletedTasks={handleGetCompletedTasks}
+                  onDeleteTask={handleDeleteTask}
+                />
+              )) }
+          </div>
         </main>
       </div>
 

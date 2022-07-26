@@ -1,5 +1,5 @@
 import { Trash } from "phosphor-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useModal } from "../../Context/ModalContext";
 import { ChackBox } from "../CheckBox";
 
@@ -17,7 +17,7 @@ interface TaskProps {
   onDeleteTask: (taskId: number) => void;
 }
 
-export function Task({
+function TaskComponent({
   task,
   onDeleteTask,
   onGetCompletedTasks,
@@ -57,3 +57,5 @@ export function Task({
     </div>
   );
 }
+
+export const Task = memo(TaskComponent)
