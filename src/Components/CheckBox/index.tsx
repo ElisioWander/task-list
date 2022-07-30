@@ -1,23 +1,25 @@
-import { Check } from "phosphor-react"
-import styles from "./CheckBox.module.scss"
+import { Check } from 'phosphor-react'
+
+import styles from './CheckBox.module.scss'
 
 interface CheckBoxProps {
-  isTaskCompleted: boolean;
-  onActiveCheckbox: () => void;
+  isTaskCompleted: boolean
+  onActiveCheckbox: () => void
 }
 
 export function ChackBox({ onActiveCheckbox, isTaskCompleted }: CheckBoxProps) {
   return (
-    <label className={styles.checkboxContainer} >
-      <input 
-        type="checkbox" 
-        disabled={isTaskCompleted} 
+    <label className={styles.checkboxContainer}>
+      <input
+        type="checkbox"
         checked={isTaskCompleted}
-        onClick={onActiveCheckbox} 
+        onClick={onActiveCheckbox}
         readOnly
       />
       <span className={styles.checkMark}>
-        { isTaskCompleted && <Check size={11} weight={"bold"} color={"#ffffff"} /> }
+        {isTaskCompleted && (
+          <Check size={11} weight={'bold'} color={'#ffffff'} />
+        )}
       </span>
     </label>
   )
