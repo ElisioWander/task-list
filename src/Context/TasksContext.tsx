@@ -1,30 +1,92 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
+import {
+  createNewTaskAction,
+  deleteTaskAction,
+  markTaskAsCheckedAction,
+  updateTaskAction,
+} from '../reducers/tasks/actions'
+import { TaskData, TasksReducer } from '../reducers/tasks/reducer'
+
+type TasksContextData = {
+  tasksState: TaskData[]
+  createNewTask: (newTask: string) => void
+  updateTask: (updatedTask: string) => void
+  deleteTask: () => void
+  markTaskAsChecked: () => void
+  getTaskId: (taskId: number) => void
+}
 
 interface TasksProviderProps {
   children: ReactNode
 }
 
-type TaskData = {
-  id: number
-  name: string
-  isChecked: boolean
-}
-
-type TasksContextData = {
-  tasks: TaskData[]
-  setTasks: React.Dispatch<React.SetStateAction<TaskData[]>>
-}
-
 const TasksContext = createContext({} as TasksContextData)
-const tasksInLocalstorage = JSON.parse(localStorage.getItem('tasks') as any)
 
 export function TasksProvider({ children }: TasksProviderProps) {
-  const [tasks, setTasks] = useState<TaskData[]>(tasksInLocalstorage || [])
+  const [tasksState, dispatch] = useReducer(TasksReducer, [], () => {
+    const storedStateAsJSON = localStorage.getItem(
+      '@todo-task:tasks-state-1.0.0',
+    )
 
-  localStorage.setItem('tasks', JSON.stringify([...tasks]))
+    if (storedStateAsJSON) {
+      return JSON.parse(storedStateAsJSON)
+    } else {
+      return []
+    }
+  })
+
+  const [selectedTaskId, setSelectedTaskId] = useState(0)
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(tasksState)
+
+    localStorage.setItem('@todo-task:tasks-state-1.0.0', stateJSON)
+  }, [tasksState])
+
+  function getTaskId(taskId: number) {
+    setSelectedTaskId(taskId)
+  }
+
+  function createNewTask(newTask: string) {
+    const createdTask = {
+      id: new Date().getTime(),
+      name: newTask,
+      isChecked: false,
+    }
+
+    dispatch(createNewTaskAction(createdTask))
+  }
+
+  function updateTask(updatedTask: string) {
+    dispatch(updateTaskAction(selectedTaskId, updatedTask))
+  }
+
+  function markTaskAsChecked() {
+    dispatch(markTaskAsCheckedAction(selectedTaskId))
+  }
+
+  function deleteTask() {
+    dispatch(deleteTaskAction(selectedTaskId))
+  }
 
   return (
-    <TasksContext.Provider value={{ tasks, setTasks }}>
+    <TasksContext.Provider
+      value={{
+        tasksState,
+        createNewTask,
+        deleteTask,
+        updateTask,
+        markTaskAsChecked,
+        getTaskId,
+      }}
+    >
       {children}
     </TasksContext.Provider>
   )

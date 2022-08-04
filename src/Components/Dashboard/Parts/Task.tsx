@@ -1,8 +1,7 @@
 import { Trash } from 'phosphor-react'
-import { useState } from 'react'
 import { useModal } from '../../../Context/ModalContext'
 import { useTasks } from '../../../Context/TasksContext'
-import { ChackBox } from '../../CheckBox'
+import { Checkbox } from '../../CheckBox'
 
 import styles from './Task.module.scss'
 
@@ -17,42 +16,29 @@ interface TaskProps {
 }
 
 export function Task({ task }: TaskProps) {
-  const [isTaskCompleted, setIsTaskCompleted] = useState(task.isChecked)
+  const { handleOpenModal } = useModal()
+  const { deleteTask, markTaskAsChecked, getTaskId } = useTasks()
 
-  const { handleOpenModal, handleGetTaskId } = useModal()
-  const { setTasks } = useTasks()
-
-  function handleDeleteTask() {
-    const currentTaskId = task.id
-
-    setTasks((state) => state.filter((task) => task.id !== currentTaskId))
+  function handleGetTaskId() {
+    getTaskId(task.id)
   }
 
-  function handleActiveCheckbox() {
-    const toggleCheckTask = !isTaskCompleted
+  function handleDeleteTask() {
+    deleteTask()
+  }
 
-    const currentTaskId = task.id
-    setTasks((state) =>
-      state.map((task) => {
-        if (task.id === currentTaskId) {
-          return { ...task, isChecked: toggleCheckTask }
-        } else {
-          return task
-        }
-      }),
-    )
-
-    setIsTaskCompleted(toggleCheckTask)
+  function handleMarkTaskAsChecked() {
+    markTaskAsChecked()
   }
 
   return (
-    <div className={styles.task} onClick={() => handleGetTaskId(task.id)}>
-      <ChackBox
-        onActiveCheckbox={handleActiveCheckbox}
-        isTaskCompleted={isTaskCompleted}
+    <div className={styles.task} onMouseEnter={handleGetTaskId}>
+      <Checkbox
+        onMarkTaskAsChecked={handleMarkTaskAsChecked}
+        isTaskChecked={task.isChecked}
       />
 
-      {isTaskCompleted ? (
+      {task.isChecked ? (
         <p className={styles.isChecked}>{task.name}</p>
       ) : (
         <p onClick={handleOpenModal}>{task.name}</p>

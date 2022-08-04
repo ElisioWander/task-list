@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
 import { useModal } from '../../../Context/ModalContext'
 import { useTasks } from '../../../Context/TasksContext'
 
@@ -7,8 +7,8 @@ import styles from './UpdateTaskModal.module.scss'
 export function UpdateTaskModal() {
   const [editTask, setEditTask] = useState('')
 
-  const { isOpenMdal, taskId, handleCloseModal } = useModal()
-  const { setTasks } = useTasks()
+  const { isOpenMdal, handleCloseModal } = useModal()
+  const { updateTask } = useTasks()
 
   function handleGetEditInputValue(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value
@@ -16,18 +16,16 @@ export function UpdateTaskModal() {
     setEditTask(inputValue)
   }
 
+  function handleEditTaskInputValueInvalid(
+    event: InvalidEvent<HTMLInputElement>,
+  ) {
+    event.currentTarget.setCustomValidity('Este campo é obrigatório')
+  }
+
   function handleUpdateTask(event: FormEvent) {
     event.preventDefault()
 
-    setTasks((state) =>
-      state.map((task) => {
-        if (task.id === taskId) {
-          return { ...task, name: editTask }
-        } else {
-          return task
-        }
-      }),
-    )
+    updateTask(editTask)
 
     handleCloseModal()
     setEditTask('')
@@ -44,6 +42,7 @@ export function UpdateTaskModal() {
             name="edit"
             value={editTask}
             placeholder="Editar tarefa"
+            onInvalid={handleEditTaskInputValueInvalid}
             onChange={handleGetEditInputValue}
           />
           <div className={styles.buttons}>
