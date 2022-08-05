@@ -1,10 +1,20 @@
 import { TaskData } from './reducer'
 
 export enum ActionTypes {
+  GET_TASK_ID = 'GET_TASK_ID',
   CREATE_NEW_TASK = 'CREATE_NEW_TASK',
   UPDATE_TASK = 'UPDATE_TASK',
   MARK_TASK_AS_CHECKED = 'MARK_TASK_AS_CHECKED',
   DELETE_TASK = 'DELETE_TASK',
+}
+
+export function getTaskIdAction(selectedTaskId: number) {
+  return {
+    type: ActionTypes.GET_TASK_ID,
+    payload: {
+      selectedTaskId,
+    },
+  }
 }
 
 export function createNewTaskAction(createdTask: TaskData) {
@@ -16,30 +26,19 @@ export function createNewTaskAction(createdTask: TaskData) {
   }
 }
 
-export function updateTaskAction(selectedTaskId: number, updatedTask: string) {
+export function updateTaskAction(updatedTask: string) {
   return {
     type: ActionTypes.UPDATE_TASK,
     payload: {
-      selectedTaskId,
       updatedTask,
     },
   }
 }
 
-export function markTaskAsCheckedAction(selectedTaskId: number) {
-  return {
-    type: ActionTypes.MARK_TASK_AS_CHECKED,
-    payload: {
-      selectedTaskId,
-    },
-  }
+export function markTaskAsCheckedAction() {
+  return { type: ActionTypes.MARK_TASK_AS_CHECKED }
 }
 
-export function deleteTaskAction(selectedTaskId: number) {
-  return {
-    type: ActionTypes.DELETE_TASK,
-    payload: {
-      selectedTaskId,
-    },
-  }
+export function deleteTaskAction() {
+  return { type: ActionTypes.DELETE_TASK }
 }

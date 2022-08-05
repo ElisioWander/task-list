@@ -7,7 +7,7 @@ import { EmptyTasks } from './Parts/EmptyTasks'
 import styles from './Dashboard.module.scss'
 
 export function Dashboard() {
-  const { tasksState: tasks } = useTasks()
+  const { tasks } = useTasks()
 
   const completedTasks = tasks.filter((task) => task.isChecked === true)
   const parsedTasks = tasks.map((task) => <Task key={task.id} task={task} />)
